@@ -1,0 +1,68 @@
+** GULP 
+
+
+gulp란? 
+node.js npm 기반의 task(작업) runner. 반복되는 task들을 자동화 해줍니다.
+빌드 시스템은 프로젝트를 다른 빌드들로(decelopment 테스트용 서버 구동 / production 소스를 minify(압축) / 등등) 빌드해줍니다.
+gulp로 인하여 이런 작업들을 자동으로 수행해주고 플러그인을 통하여 매우 확장성있게 작업할 수 있습니다.
+
+*node.js 기반이기에 node.js 설치가 필수적으로 필요합니다.
+
+
+--
+
+
+** GULP 세팅하기
+
+
+1. 터미널을 통해서 package.json 생성 (프로젝트마다 반드시 한번 수행해야합니다)
+$ npm init
+
+
+2. 걸프 전역 설치
+$ npm install gulp -g
+
+ *설치 확인 시 - v 을 통하여 현재 설치된 버전의 정보를 알 수가 있습니다.
+
+
+3. 걸프 및 몇가지 디펜던시를 프로젝트에 설치
+$ npm install gulp --save-dev
+
+ *gulp와 관련 디펜던시들은 어플리케이션 개발 과정까지만 필요하기 때문에 devDependency로써만 설치하게 됩니다. 이는 gulp의 플러그인들을 설치할 때에도 같습니다.
+  ex : $ npm install gulp-[plugin name] --save-dev
+
+ * --save-dev 옵션은 package.json 파일에 gulp.js 모듈 정보를 추가해줍니다.
+ ** npm install 옵션 --save, --save-dev 차이
+ - 패키지를 설치하는 위치와 해당 패키지의 의존성을 저장하는 위치가 다릅니다.
+
+   --save 옵션 사용시 프로젝트를 종속성(dependency)으로 저장합니다. 애플리케이션을 실행할 때 필요한 패키지로 npm install 명령어를 사용하면 자동으로 설치됩니다.
+   보통 프로덕션 코드( 프로그램 구현을 담당하는 부분 = 사용자가 실제로 사용하는 소스 코드 )
+   --save-dev 옵션 사용시 패키지를 개발 의존성(devDependency)으로 저장합니다. 개발 중에만 필요한 패키지로 npm install 명령어를 사용하면 설치되지만 프로덕션 코드에서는 사용되지 않습니다.
+   개발 시에만 필요한 도구나 테스트 프레임워크(테스트 코드를 작성 수 있는 기반을 제공해주는 JS 도구) 등이 포함됩니다
+
+   두 옵션을 모드 사용하지 않은 상태로 npm install 시 종속성 / 개발 의존성 필드에 아무런 패키지도 저장되지 않아 다시 옵션을 선택하여 지정합니다.
+
+
+--
+
+
+** 폴더 구조
+src(소스) 폴더와 dist(distribution 유통/배포) 폴더로 나누어 생성합니다
+src : 아무런 처리를 하지 않은 JS / 압축하지 않은 (s)css / 최적화하지 않은 이미지 등
+dist : gulp에 의해 빌드된 파일들이 들어감
+dist 폴더에는 미리 전체적인 구조를 넣을 필요 없이 .gitgnore 에 추가한 뒤 직접 빌드합니다.
+
+
+--
+
+
+** gulpfile.js
+gulp의 설정이 들어갈 곳입니다.
+
+* task
+
+  var gulp = require('gulp');
+  var concat = require('gulp-concat');
+  // gulpfile 에서 사용하기 위해 gulp를 require 해야할 필요가 있습니다. 이러한 gulp plugin들을 사용하기 전 반드시 npm으로 --save-dev 옵션을 통하여 설치하여야 합니다. //
+
+  gulp.task()
