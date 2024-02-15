@@ -65,4 +65,47 @@ gulp의 설정이 들어갈 곳입니다.
   var concat = require('gulp-concat');
   // gulpfile 에서 사용하기 위해 gulp를 require 해야할 필요가 있습니다. 이러한 gulp plugin들을 사용하기 전 반드시 npm으로 --save-dev 옵션을 통하여 설치하여야 합니다. //
 
-  gulp.task()
+  gulp.task(name, deps, func)
+  // gulp.task로 gulp task를 선언하게 되는데 이에 3개의 파라미터가 포함됩니다. (두번째 파라메터 생략가능)
+  name : task의 이름을 지정, 이름엔 공백 포함 불가
+  deps : 선언하고 있는 task 수행 이전에 먼저 실행되어야하는 task 의 배열 (생략가능)
+  func : 실제 수행할 task의 내용을 정의하는 function  //
+
+  gulp.src(files)
+  // 파일이나 파일의 경로들이 포함된 배열 또는 string(문자열)입니다. 와일드카드형태(구체적인 이름 대신 여러 파일을 동시에 지정할목적으로 사용되는 특수기호 / ex : js/**/*.js)로 표현해 줄 수도 있습니다. 와일드카드 형태 말고도 배열을 사용하여 원하는 만큼 여러개의 파일들과 폴더들을 가져올 수 있습니다. 만약 배열 앞에 !로 시작한다면 그 파일은 포함하지 않는다는 의미입니다.(바로앞 와일드 카드에서 이 파일을 포함하고 있을때만 사용) //
+
+  gulp.pipe()
+  //  pipe를 사용함으로서 task들의 결과물들을 function들에게 전달 해 줄 수 있습니다. //
+  **  ex : gulp.src('public/src/js/*.js')
+               .pipe(stripDebug())
+               .pipe(uglify())
+               .pipe(concat('script.js'))
+               .pipe(gulp.dest('public/dist/js'));
+      1. public/src/js 폴더의 모든 js 파일을 긁어옴
+      2. 그것을 stripDebug에게로 파이핑 (stripDebug : 모든 console.log와 alert 제거)
+      3. uglify로 파이핑 (uglify : JavaScript 압축)
+      4. concat으로 파이핑 (concat : console.log 와 alert 제거 이후 모든 파일들을 all.js 파일 하나로 병합)
+      5. gulp.dest()로 보냄으로서 실 사용할 output 파일로 쓰인다 > dist/js 내에 위치하게됨
+
+  gulp.task('default', [])
+  //  default로 설정시 이름을 명시하지 않아도 실행 가능합니다. 다른 이름으로 설정 후 실행시 $ gulp task-name 으로 실행 가능합니다.  //
+
+
+--
+
+
+gulpfile 작성
+- gulp-webserver : 웹서버처럼 동작하게 하는 플러그인
+- gulp-concat : js 파일 병합을 위한 플러그인
+- gulp-uglify : js 파일 압축을 위한 플러그인
+- gulp-minify-html : html 파일 minify(압축)를 위한 플러그인
+- gulp-sass : sass 파일을 컴파일하기 위한 플러그인
+- gulp-livereload : 웹브라우저를 리로드 하기 위한 플러그인
+
+
+
+
+
+      
+      
+
